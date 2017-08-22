@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<p>
+		v-model可以实现双向绑定。
+		<br>
+		v-bind只是实现输出。
+	</p>
+	<div id="app">
+		<div v-text='msg'></div>
+		<input type="text" name="" v-bind:value='msg'>
+		<br>
+		<input type="text" name="" v-model='msg'>
+		
+
+		<br>
+		<h4>复选框</h4>
+		<input type="checkbox" id="checkbox" v-model="checked">
+		<label for="checkbox">{{ checked }}</label>
+
+
+		<br>
+		<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+		<label for="jack">Jack</label>
+		<input type="checkbox" id="john" value="John" v-model="checkedNames">
+		<label for="john">John</label>
+		<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+		<label for="mike">Mike</label>
+		<br>
+		<span>Checked names: {{ checkedNames | json }}</span>
+
+		<br>
+		<button v-on:click='showVal'>展示选中的值</button>
+
+	</div>	
+</body>
+</html>
+
+
+<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+<script type="text/javascript">
+	var obj = {
+		el : '#app',
+		data : {
+			msg : 'abc',
+			checked:true,
+			checkedNames:[], /*这里一定要写成数组*/
+		},
+		methods:{
+			showVal:function(){
+				for (var i = 0; i < this.checkedNames.length; i++) {
+					console.log(this.checkedNames[i]);
+				}
+			}
+		}
+	};
+	var app = new Vue(obj);
+</script>

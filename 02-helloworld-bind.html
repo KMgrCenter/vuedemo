@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	
+</head>
+<body>
+
+	<div id="app" >
+		{{message}}
+		<div v-bind:title='message'>这里是内容</div>
+		<div :title='message'>缩写形式</div>
+		<div v-text='message'>加载中...</div>
+	</div>
+
+	<!--/**********************************************************************/-->
+	<h4></h4>
+	<p>
+		使用{{}}来绑定数据，通过向Vue传递一个对象来初始化Vue，此对象含有数据绑定的范围，还有包含的数据。
+		<br>
+		建议使用<code>&lt;div v-text='message'&gt;加载中...&lt;/div&gt;</code>的形式来代替{{}}的绑定形式，上面的形式在网络情况慢的情况下，会显示出大括号来。
+	</p>
+	<!--/**********************************************************************/-->
+
+</body>
+
+	<!-- <script src="https://unpkg.com/vue"></script> -->
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script type="text/javascript">	
+		var obj = {
+			el:'#app',
+			data:{
+				message:'hello world!'
+			}
+		};
+		var app = new Vue(obj);
+	</script>
+
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		[v-cloak] {
+		  display:none !important;
+		}
+	</style>
+</head>
+<body >
+<div id="app">
+	<h4>小结</h4>
+	<p>使用数据绑定、判断显示、遍历循环还有事件来做一个小示例</p>
+
+	<p>
+		展示一个用户列表。有新增，删除，编辑 功能。	
+		<br>
+		拷贝问题。事件传递参数问题。
+
+	</p>	
+
+	<table>
+		<tr>
+			<th>用户名</th>
+			<th>性别</th>
+			<th>手机号</th>
+			<th>邮箱</th>
+			<th>状态</th>
+			<th>操作</th>
+		</tr>
+
+		<tr v-cloak v-for='item in users'>	
+			<td v-bind:title='item.name' v-text='item.name'></td>
+			<td v-bind:tite='item.sex' v-text='item.sex'></td>
+			<td v-bind:title='item.phone' v-text='item.phone'></td>
+			<td v-bind:title='item.email' v-text='item.email'></td>
+			<td v-bind:title='item.status' v-text='item.status'></td>
+			<td>
+				<select v-model="item.status" v-on:change='changeStatus(item)'>
+				  <option>启用</option>
+				  <option>禁用</option>
+				</select>
+				<button v-on:click='deleteUser(item)'>删除</button>
+			</td>
+		</tr>
+
+	</table>
+
+	<br />
+	<div>
+		姓名：<input type="text" name="" v-model='addUserModel.name'>
+		<br>
+		性别：<input type="radio" name="sex" v-model='addUserModel.sex' value=0>男 <input type="radio" name="sex" v-model='addUserModel.sex' value=1>女
+		<br>
+		手机：<input type="text" name="" v-model='addUserModel.phone'>
+		<br>
+		邮箱：<input type="text" name="" v-model='addUserModel.email'>
+		<br>
+		是否启用：
+		<input type="checkbox" v-model="addUserModel.status">
+	</div>
+
+	<button v-on:click='addUser'>新增</button>
+</div>
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script type="text/javascript">
+
+		var addUserModel = {name:'',sex:1,status:true};
+
+		var obj = {
+			el: '#app',
+			data:{
+				users:[],
+				addUserModel:addUserModel
+			},
+			methods:{
+				addUser:function(){
+
+					//复制
+					var obj=JSON.parse(JSON.stringify(this.addUserModel));
+					obj.sex = obj.sex == 1 ? '女' : '男';
+					obj.status = obj.status ? '启用' : '禁用';
+					this.users.push(obj);
+					alert('调用接口新增');
+
+					//恢复初始值
+					this.addUserModel = {name:'',sex:1,status:true};
+				},
+				deleteUser:function (e) {
+			       console.log(e);
+			       alert('调用接口删除');
+			       this.users.splice(this.users.indexOf(e),1);
+			    },
+			    changeStatus:function(item){
+			    	alert('调用接口更改');
+			    	console.log(item);
+			    	console.log(item.status)
+			    }
+			}
+		};
+		var app = new Vue(obj);
+	</script>
+
+</html>

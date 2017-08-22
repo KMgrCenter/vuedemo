@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<div v-if='success'>这里是内容</div>
+	</div>
+
+	<h4></h4>
+	<p>
+		使用v-if来显示一个【加载中...】的状态	
+	</p>
+
+</body>
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script type="text/javascript">
+		var obj = {
+			el: '#app',
+			data: {
+				success:true
+			}
+		};
+		var app = new Vue(obj);
+	</script>
+</html>

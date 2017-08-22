@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div id="app">
+		<div>
+			<p>
+				用户名:<span v-text='user.name'></span>
+				<br>
+				状态:<span v-text='user.msg'></span>				
+			</p>
+			<button v-on:click='change'>点击切换状态</button>
+			<button @click='change'>缩写形式</button>
+		</div>
+	</div>
+
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script type="text/javascript">
+		var obj = {
+			el: '#app',
+			data: {
+				user:{
+					name:'xiaoming',
+					isLock: false,
+					msg: '未锁定'
+				},
+			},
+			methods:{
+				change:function(){
+					this.user.isLock = !this.user.isLock;
+					if(this.user.isLock)
+						this.user.msg = '未锁定';
+					else
+						this.user.msg = '已锁定';
+				}	
+			}
+		};
+		var app = new Vue(obj);
+	</script>
+
+</html>
