@@ -1,0 +1,60 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<h4>计算属性</h4>
+
+	<div id="app">
+		性别：{{sex}}
+		<br />
+		性别描述：{{getSexDesc}}
+
+		<br />
+		<button v-on:click='changeSexVal'>点击我改变性别的值</button>
+
+
+
+
+
+
+
+
+		<h4>说明</h4>
+		<p>
+			computed即计算属性的好处是性能比使用methods好，计算属性只有当相关变量改变时，才会计算。
+			计算属性只有在它的相关依赖发生改变时才会重新求值。这就意味着只要 sex的值 还没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。
+		</p>
+	</div>
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+	<script type="text/javascript">
+
+		var obj = {
+			el : '#app',
+			data:{
+				sex:0
+			},
+			methods:{
+				changeSexVal:function(){
+					this.sex = this.sex == 1 ? 0 : 1;
+				}
+			},
+			computed:{
+				getSexDesc: function(){
+					if(this.sex == 0)
+						return '男';
+					else if(this.sex == 1)
+						return '女';
+					return '';
+				}
+			}
+		};
+
+		new Vue(obj);
+
+	</script>
+
+</html>

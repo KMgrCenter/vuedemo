@@ -1,0 +1,107 @@
+<html>
+<head>
+	<title></title>
+
+	<style type="text/css">
+		.left-panel{
+			width:230px;
+			background-color: blue;
+			padding: 20px;
+			padding-top:-30px;
+		}
+		.page-container{
+			width:210px;			
+			margin: 20px auto;			
+		}
+		.page{
+			height: 150px;
+			border: 1px solid gray;
+			background-color: yellow;
+			text-align: center;
+			vertical-align: center;
+		}
+		.page-footer{
+			text-align: center;
+			background-color: red;
+		}
+		.page-footer-del{
+			text-align: center;
+			background-color: green;	
+		}
+		.addPageContainer{
+			width:210px;
+			margin:20px auto;
+			margin-top: 50px;
+			text-align: center;
+			background-color: yellow;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<h4>组件、事件、style的运用</h4>
+
+	<p>
+		问题：组件内的click事件
+	</p>
+
+	<div id="app">
+
+		<div class='left-panel'>
+			<user-page v-for='page in pages' v-bind:page='page' v-bind:key='page.index'></user-page>
+			<div class='addPageContainer' v-on:click='addPage'>
+				新增页
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+	<script type="text/javascript">
+
+		/********************页************************/
+		Vue.component('user-page',{
+			props:['page'],
+			template: "<div class='page-container'>" + 
+						" <div  class='page'>{{page.title}}</div>" + 
+						" <div class='page-footer'>{{ '第' + page.index + '页' }}</div>" + 
+						" <div class='page-footer-del' v-on:click.native:delPage(page)>点我删除</div>" + 
+					  " </div>",
+		});
+
+		var addPage = function(){
+			var length = this.pages.length;
+			this.pages.push( { index: length+1, title:'无标题' } );
+		}
+
+		var delPage = function(page){
+			alert('del');
+			this.$emit('click', function () {
+	          alert('inner');
+	        })
+		}
+
+		var obj = {
+			el:'#app',
+			data:{
+				pages:[
+					{
+						index:1,
+						title:'首页',
+					}				
+				]
+			},
+			methods:{
+				addPage:addPage,
+				delPage:delPage
+			}		
+		};
+		new Vue(obj);
+	</script>
+
+</html>

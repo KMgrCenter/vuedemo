@@ -1,0 +1,80 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		.active{
+			background-color: red;
+		}
+		.mouseActive{
+			background-color: yellow;
+		}
+		li{
+			cursor: pointer;;
+		}
+	</style>
+</head>
+<body>
+	<h4>绑定到class</h4>
+
+	<h4>有一个列表，鼠标点击哪个item，哪个高亮。</h4>
+	<h4>鼠标移动上去，也有效果。</h4>
+
+	<p>
+		用到了
+		<ol>
+			<li>循环</li>
+			<li>绑定</li>
+			<li>事件</li>
+			<li>class绑定</li>
+		</ol>
+	</p>
+
+	<h4>示例</h4>
+
+
+	<div id="app">
+		<ol>
+			<li v-for='menu in menus' v-text='menu.text' v-on:click='menuClick(menu)' v-on:mouseover='menuMouseOver(menu)' v-bind:class='getMenuClass(menu)'>				
+			</li>
+		</ol>		
+	</div>
+
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+	<script type="text/javascript">
+		var obj = {
+			el:'#app',
+			data:{
+				currentMenuIndex:1,
+				currentMouseOverItemIndex:'',
+				menus:[
+					{ menuid:1, text:'首页', isActive:false },
+					{ menuid:2, text:'用户管理', isActive:false },
+					{ menuid:3, text:'权限管理', isActive:false }
+				]
+			},
+			computed:{
+				menuClassObj:function(){
+					
+				}
+			},
+			methods:{
+				menuClick: function(item){
+					this.currentMenuIndex = item.menuid;
+				},
+				menuMouseOver:function(item){
+					this.currentMouseOverItemIndex = item.menuid;
+				},
+				getMenuClass:function(menu){
+					return {
+						'active': this.currentMenuIndex == menu.menuid,
+						'mouseActive': this.currentMouseOverItemIndex == menu.menuid && this.currentMenuIndex != menu.menuid
+					}
+				}
+			}
+		};
+		new Vue(obj);
+	</script>
+
+</html>

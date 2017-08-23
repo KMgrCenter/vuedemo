@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h4>watcher 监听</h4>
+	<div id="app">
+		请输入姓名：
+		<input type='text' v-model='name'>
+		<br>
+		结果：
+		<span>{{msg}}</span>
+	</div>
+</body>
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+	<script type="text/javascript">
+
+		var obj = {
+			el:'#app',
+			data:{
+				name:'',
+				msg:''
+			},
+			watch:{
+				name: function(newVal){
+					this.msg = newVal * 2 + 1;
+				}
+			}
+		};
+		new Vue(obj);
+
+	</script>
+</html>

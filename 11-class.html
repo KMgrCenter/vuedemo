@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h4>绑定到class</h4>
+
+	<div id="app">
+
+		<h4>简单使用</h4>
+		<span v-bind:class='{active:isactive, danger: isdanger}'>请查看我的class值</span>
+
+
+		<h4>对象形式</h4>
+		<span v-bind:class='classObject'>请查看我的class值</span>
+
+		<h4>计算属性返回class对象</h4>
+		<span v-bind:class='classObj'>请查看我的class值</span>
+	</div>
+
+</body>
+
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+	<script type="text/javascript">
+		var obj = {
+			el:'#app',
+			data:{
+				isactive:true,
+				isdanger:true,
+				classObject: {
+				    active: true,
+				    'text-danger': true
+				}
+			},
+			computed:{
+				classObj:function(){
+					return {
+				    	active: true,
+				    	'text-danger': true
+				    };
+				}
+			}
+		};
+		new Vue(obj);
+	</script>
+
+</html>
