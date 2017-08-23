@@ -2,24 +2,30 @@
 <html>
 <head>
 	<title></title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	[v-cloak] {
+	  display:none !important;
+	}
+	</style>
 </head>
 <body>
 	<p>
-		v-model可以实现双向绑定。
-		<br>
-		v-bind只是实现输出。
+	
+		
 	</p>
 	<div id="app">
-		<div v-text='msg'></div>
-		<input type="text" name="" v-bind:value='msg'>
+		数据展示：<span v-text='msg'></span>
 		<br>
-		<input type="text" name="" v-model='msg'>
+		v-bind只是实现输出。<input type="text" name="" v-bind:value='msg'>
+		<br>
+		v-model可以实现双向绑定。<input type="text" name="" v-model='msg'>
 		
 
 		<br>
 		<h4>复选框</h4>
 		<input type="checkbox" id="checkbox" v-model="checked">
-		<label for="checkbox">{{ checked }}</label>
+		<label for="checkbox"  v-cloak>{{ checked }}</label>
 
 
 		<br>
@@ -30,11 +36,64 @@
 		<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
 		<label for="mike">Mike</label>
 		<br>
-		<span>Checked names: {{ checkedNames | json }}</span>
+		<span  v-cloak>Checked names: {{ checkedNames | json }}</span>
 
 		<br>
 		<button v-on:click='showVal'>展示选中的值</button>
 
+		<br>
+		<h4>单选框</h4>
+		<input type="radio" id="one" value="One" v-model="picked">
+		<label for="one">One</label>
+		<br>
+		<input type="radio" id="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br>
+		<span  v-cloak>Picked: {{ picked }}</span>
+
+		<br>
+		<h4>下拉</h4>
+		<select v-model="selected">
+		  <option>A</option>
+		  <option>B</option>
+		  <option>C</option>
+		</select>
+		<span  v-cloak>Selected: {{ selected }}</span>
+
+		<br>
+		<h4>多选下拉（按住Ctrl键）</h4>
+		<select v-model="mulselected" multiple>
+		  <option selected>A</option>
+		  <option>B</option>
+		  <option>C</option>
+		</select>
+		<br>
+		<span  v-cloak>Selected: {{ mulselected | json }}</span>
+
+		<br>
+		<h4>下拉（动态数据源）</h4>
+		<select v-model="dataSelected" v-cloak>
+		  <option v-for="option in options" v-bind:value="option.value">
+		    {{ option.text }}
+		  </option>
+		</select>
+		<span  v-cloak>Selected: {{ dataSelected }}</span>
+
+		<h4>延迟展示</h4>
+		更改文本框内容，展示内容随即变化。<input type='text' v-model='msg' /><span v-text='msg'></span>
+		<br>
+		使用lazy延迟变化。离开焦点时才会发生变化。<input type='text' v-model.lazy='msg' /><span v-text='msg'></span>
+
+		<h4>输入内容转换为数字</h4>
+		<input type="number" name="" v-model.number='age'>
+		{{age}}
+
+		<h4>自动过滤首位空格</h4>
+		没有过滤的：<input type="text" name="" v-model='trimData'>
+		<br />
+		过滤的：<input type="text" name="" v-model.trim='trimData'>
+		<br />
+		<button v-on:click='showTrimData'>展示输入的内容到控制台</button>
 	</div>	
 </body>
 </html>
@@ -48,12 +107,22 @@
 			msg : 'abc',
 			checked:true,
 			checkedNames:[], /*这里一定要写成数组*/
+			picked:'',
+			selected:'C',
+			mulselected:[],
+			options:[{value:0,text:'电脑'},{value:1,text:'手机'}],
+			dataSelected:1,
+			age:'',
+			trimData:'',
 		},
 		methods:{
 			showVal:function(){
 				for (var i = 0; i < this.checkedNames.length; i++) {
 					console.log(this.checkedNames[i]);
 				}
+			},
+			showTrimData:function(){
+				console.log(this.trimData);
 			}
 		}
 	};

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title></title>
-	
+	<meta charset="utf-8">
 </head>
 <body>
 
@@ -11,6 +11,13 @@
 		<div v-bind:title='message'>这里是内容</div>
 		<div :title='message'>缩写形式</div>
 		<div v-text='message'>加载中...</div>
+
+		<h4>以html原始形式输出</h4>
+		<div v-html="content"></div>
+		<div v-text='content'></div>
+
+		<h4>绑定到表达式</h4>
+		<div v-text="sex==0?'男':'女'"></div>
 	</div>
 
 	<!--/**********************************************************************/-->
@@ -30,7 +37,9 @@
 		var obj = {
 			el:'#app',
 			data:{
-				message:'hello world!'
+				message:'hello world!',
+				content:'<strong>abc</strong>',
+				sex:1
 			}
 		};
 		var app = new Vue(obj);

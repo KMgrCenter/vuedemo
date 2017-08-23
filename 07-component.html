@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+	
+	<div id="app">
+		<h4>组件</h4>
+
+		<ol>
+			<todo-list></todo-list>
+			<todo-list></todo-list>
+			<todo-list></todo-list>
+		</ol>
+
+		<user-box 
+			v-for='user in users'
+			v-bind:user='user'
+			v-bind:key='user.id'
+		>			
+		</user-box>
+
+	</div>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script type="text/javascript">
+		
+		/*定义一个组件*/
+		Vue.component('todo-list',{
+			template: '<li>待办事项</li>'
+		});
+
+		/*定义一个可以传递数据的组件*/
+		Vue.component('user-box',{
+			props:['user'],
+			template: '<div></span> <h4>{{user.name}}</h4> <p>{{user.age}}</p></div>',
+		});
+
+		var obj = {
+			el : '#app',
+			data:{
+				users:[
+					{id:1, name:'abc', age:20},
+					{id:2, name:'abdc', age:30},
+				]
+			}
+		};
+
+		var app = new Vue(obj);
+
+
+	</script>
+
+</html>

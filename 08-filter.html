@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div id="app">
+		<h4>过滤器</h4>
+		<p>
+			可以使用在文本转换上。
+			过滤器只适用于v-bind和{{}}.因此v-text不可以使用。
+		</p>
+		{{sex}}
+		<div>
+			<div>{{sex|sum}}</div>
+			<div v-text='sex'></div>
+		</div>
+	</div>
+
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
+	<script type="text/javascript">
+		
+		Vue.filter("sum", function(value) {
+            return value + 4;
+        });
+
+		var obj = {
+			el:'#app',
+			data:{
+				sex:0
+			}		
+		};
+
+		var app = new Vue(obj);
+
+	</script>
+
+
+</html>

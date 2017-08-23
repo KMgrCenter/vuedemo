@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title></title>
+	<meta charset="utf-8">
 </head>
 <body>
 
@@ -15,6 +16,9 @@
 			<button v-on:click='change'>点击切换状态</button>
 			<button @click='change'>缩写形式</button>
 		</div>
+
+		<h4>点击时调用 event.preventDefault()</h4>
+		<xmp>&lt;form v-on:submit.prevent="onSubmit"&gt;&lt;/form&gt;</xmp>
 	</div>
 
 </body>
