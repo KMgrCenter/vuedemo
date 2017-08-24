@@ -17,7 +17,6 @@
 			height: 150px;
 			border: 1px solid gray;
 			background-color: yellow;
-			text-align: center;
 			vertical-align: center;
 		}
 		.page-footer{
@@ -26,7 +25,8 @@
 		}
 		.page-footer-del{
 			text-align: center;
-			background-color: green;	
+			background-color: green;
+			cursor: pointer;
 		}
 		.addPageContainer{
 			width:210px;
@@ -49,7 +49,8 @@
 	<div id="app">
 
 		<div class='left-panel'>
-			<user-page v-for='page in pages' v-bind:page='page' v-bind:key='page.index'></user-page>
+			{{getPageIndex}}
+			<user-page v-for='page in pages' v-bind:page='page' v-bind:key='page.index' v-on:delpageclick='delPage(page)'></user-page>
 			<div class='addPageContainer' v-on:click='addPage'>
 				新增页
 			</div>
@@ -70,20 +71,25 @@
 			template: "<div class='page-container'>" + 
 						" <div  class='page'>{{page.title}}</div>" + 
 						" <div class='page-footer'>{{ '第' + page.index + '页' }}</div>" + 
-						" <div class='page-footer-del' v-on:click.native:delPage(page)>点我删除</div>" + 
-					  " </div>",
+						" <div class='page-footer-del' v-on:click='delPage'>点我删除</div>" + 
+					  " </div>",                                                                                                                                                                                                  
+			methods:{
+				delPage:function(){		
+					/*注意这里一定要小写*/			
+					this.$emit('delpageclick');
+				}
+			}
+			
 		});
 
 		var addPage = function(){
 			var length = this.pages.length;
-			this.pages.push( { index: length+1, title:'无标题' } );
+			this.pages.push( { title:'无标题' } );
 		}
 
 		var delPage = function(page){
-			alert('del');
-			this.$emit('click', function () {
-	          alert('inner');
-	        })
+			console.log(page.index);
+			this.pages.splice(this.pages.indexOf(page),1);
 		}
 
 		var obj = {
@@ -98,8 +104,15 @@
 			},
 			methods:{
 				addPage:addPage,
-				delPage:delPage
-			}		
+				delPage:delPage,
+			},
+			computed:{
+				getPageIndex:function(){
+					for (var i = 0; i < this.pages.length; i++) {
+						this.pages[i].index = i+1;
+					}
+				}
+			}	
 		};
 		new Vue(obj);
 	</script>

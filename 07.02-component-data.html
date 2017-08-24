@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+	
+	组件中的data一定要是函数。
+	<br>
+	不要返回一个指定的对象，而是每次都是一个新的对象。
+	<br>
+	这样的话，相同的组件间才不会共用一个变量。
+
+	<div id="app">
+		
+		<my-div></my-div>
+		<my-div></my-div>
+		<my-div></my-div>
+
+	</div>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script type="text/javascript">
+		
+		Vue.component('my-div',{
+			template:'\
+			 <button v-on:click="msg+=1">{{msg}}</button>\
+			',
+			data:function(){
+				return {
+					msg:0
+				}
+			}
+		});
+
+		var obj = {
+			el: '#app',
+
+		}
+
+		var app = new Vue(obj);
+
+
+	</script>
+
+</html>

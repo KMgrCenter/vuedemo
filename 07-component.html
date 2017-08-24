@@ -23,12 +23,14 @@
 		>			
 		</user-box>
 
+		<my-input></my-input>
+
 	</div>
 
 	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
 	<script type="text/javascript">
 		
-		/*定义一个组件*/
+		/*定义一个组件，使用这种形式定义的全局组件*/
 		Vue.component('todo-list',{
 			template: '<li>待办事项</li>'
 		});
@@ -46,6 +48,12 @@
 					{id:1, name:'abc', age:20},
 					{id:2, name:'abdc', age:30},
 				]
+			},
+			/*局部形式的注册组件*/
+			components:{
+				'my-input':{
+					template:"<input type='text' style='color:red' />"
+				}
 			}
 		};
 

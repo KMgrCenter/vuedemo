@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div id="app">
+		
+		<p>下面的渲染不对，审查元素</p>
+		<table>
+			<my-row></my-row>
+		</table>
+
+		<p>使用【is='my-row'】的才对，审查元素</p>
+		<table>
+			<tr is='my-row'></tr>
+		</table>
+
+	</div>
+
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script type="text/javascript">
+		
+		Vue.component('my-row',{
+			template:'\
+				<tr><td>abc</td><td>abc</td></tr>\
+			'
+		});
+
+		var obj = {
+			el:'#app',			
+		};
+
+		new Vue(obj);
+
+	</script>
+
+</html>
