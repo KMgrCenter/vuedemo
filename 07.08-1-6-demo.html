@@ -19,8 +19,10 @@
 			<!--显示各个控件的地方-->
 			<div class='pageContainer'>				
 				<div v-for='item in currentPage.content'>
-					<text-ctrl v-if='item.type=="text"' v-bind:data='item' v-on:click.native='selectContent(item)'></text-ctrl>
-					<img-ctrl v-if='item.type=="img"' v-bind:data='item' v-on:click.native='selectContent(item)'></img-ctrl>
+					<!-- <text-ctrl v-if='item.type=="text"' v-bind:data='item' v-on:click.native='selectContent(item)'></text-ctrl>
+					<img-ctrl v-if='item.type=="img"' v-bind:data='item' v-on:click.native='selectContent(item)'></img-ctrl> -->		
+					<!-- 可以使用动态组件替换上面的内容 -->			
+					<component v-bind:is='currentView=item.ctrlname' v-bind:data='item' v-on:click.native='selectContent(item)'></component>
 				</div>
 			</div>
 
@@ -37,7 +39,7 @@
 		
 </body>
 
-	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.js"></script>
 
 	<script type="text/javascript">
 		
@@ -72,7 +74,7 @@
 			props:['data'],			
 		})
 
-		Vue.component('text-ctrl',{			
+		Vue.component('text-ctrl',{
 			template:'<div :style="styleObj">{{textVal}}</div>',
 			props:['data'], 
 			computed:{
@@ -108,14 +110,70 @@
 				},
 				load:function(){
 					
-					var dataStr = '[{"no":1,"content":[{"type":"text","fontSize":"244","val":"你好","backgroundColor":"red"},{"type":"img","img":"user.png1","width":400}]},{"no":2,"content":[{"type":"text","fontSize":"24","val":"你好2","backgroundColor":"red"},{"type":"img","img":"user.png2","width":400}]},{"no":1,"content":[{"type":"text","fontSize":"42","val":"你好3","backgroundColor":"red"},{"type":"img","img":"user.png3","width":403}]}]';
+					/*var dataStr = '[{"no":1,"content":[{"type":"text","fontSize":"244","val":"你好","backgroundColor":"red"},{"type":"img","img":"user.png1","width":400}]},{"no":2,"content":[{"type":"text","fontSize":"24","val":"你好2","backgroundColor":"red"},{"type":"img","img":"user.png2","width":400}]},{"no":1,"content":[{"type":"text","fontSize":"42","val":"你好3","backgroundColor":"red"},{"type":"img","img":"user.png3","width":403}]}]';
 
-					this.pages = eval(dataStr);
+					this.pages = eval(dataStr);*/
 					this.currentPage = this.pages[0];
 				}
 			},
 			data:{
-				pages:[],
+				currentView:'text-ctrl',
+				pages:[
+				    {
+				        "no": 1,
+				        "content": [
+				            {
+				                "type": "text",
+				                "ctrlname":'text-ctrl',
+				                "fontSize": "244",
+				                "val": "你好",
+				                "backgroundColor": "red"
+				            },
+				            {
+				                "type": "img",
+				                "ctrlname":'img-ctrl',
+				                "img": "user.png1",
+				                "width": 400
+				            }
+				        ]
+				    },
+				    {
+				        "no": 2,
+				        "content": [
+				            {
+				                "type": "text",
+				                "ctrlname":'text-ctrl',
+				                "fontSize": "24",
+				                "val": "你好2",
+				                "backgroundColor": "red"
+				            },
+				            {
+				                "type": "img",
+				                "ctrlname":'img-ctrl',
+				                "img": "user.png2",
+				                "width": 400
+				            }
+				        ]
+				    },
+				    {
+				        "no": 1,
+				        "content": [
+				            {
+				                "type": "text",
+				                "ctrlname":'text-ctrl',				                
+				                "fontSize": "42",
+				                "val": "你好3",
+				                "backgroundColor": "red"
+				            },
+				            {
+				                "type": "img",
+				                "ctrlname":'img-ctrl',
+				                "img": "user.png3",
+				                "width": 403
+				            }
+				        ]
+				    }
+				],
 				currentPage:'',
 				currentContent:'',
 				dataStr:'',
