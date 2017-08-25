@@ -6,13 +6,14 @@
 </head>
 <body>
 	<div id="app">
-		<div v-for='item in items'>
-			<div v-if='!items'>加载中...</div>
+		<div v-for='item in cuItems'>
+			<div v-if='!cuItems'>加载中...</div>
 			<div>
 				<h4 v-text='item.name'></h4>
 				<p v-text='item.age'></p>
 			</div>
 		</div>
+		<button @click='changeItems'>改变items对象</button>
 	</div>
 
 	<h4></h4>
@@ -28,11 +29,20 @@
 		var obj = {
 			el: '#app',
 			data: {
+				cuItems:'',
 				items:[
 					{ name:'小明', age: '21'},
 					{ name:'小红', age: '22'},
 					{ name:'小李', age: '13'},
+				],
+				items2:[
+					{ name:'小明2', age: '21'},
 				]
+			},
+			methods:{
+				changeItems:function(){
+					this.cuItems = this.cuItems == this.items ? this.items2 : this.items;
+				}
 			}
 		}
 		var app = new Vue(obj);

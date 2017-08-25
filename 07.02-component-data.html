@@ -19,6 +19,11 @@
 		<my-div></my-div>
 		<my-div></my-div>
 
+
+		<my-div2 :data='a'></my-div2>
+		<button @click='change'>改变a的值</button>
+		<strong>注意data中计算出来的msg没有改变</strong>
+
 	</div>
 
 	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
@@ -35,8 +40,29 @@
 			}
 		});
 
+		Vue.component('my-div2',{
+			template:'\
+			 <div>{{msg}}<hr />{{data}}</div>\
+			',
+			data:function(){
+				return {
+					msg:this.data+'abc'
+				}
+			},
+			props:['data']
+		});
+
 		var obj = {
 			el: '#app',
+			data:{
+				a:'1'
+			},
+			methods:{
+				change:function(){
+					this.a = 2;
+				}
+			}
+
 
 		}
 

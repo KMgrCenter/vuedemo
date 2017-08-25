@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+		<div id="app">
+			<h4>自定义事件的表单输入组件</h4>
+
+
+			<p>其实就是在输入的时候，更新其绑定的对象。所以要绑定到input输入事件中。</p>
+
+			<input type='text' v-model='something' />
+			等于后面的写法
+			<input type="text" v-bind:value='something' v-on:input='something = $event.target.value'>
+			{{something}}
+			
+			<number-input v-model='age'></number-input>
+			等于
+			<number-input v-bind:value='age' v-on:input='age = arguments[0]'></number-input>
+			{{age}}
+		</div>
+
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+
+	<script type="text/javascript">
+		
+		Vue.component('number-input',{
+			props:['value'],
+			/*v-bind:value='value' 后面的 value指的是父组件传过来的值。 */
+			template:"<div>what wrong?<input ref='control' v-bind:value='value' v-on:input='updateVal($event.target.value)'/></div>",
+			methods:{
+				updateVal:function(val){
+					var newVal = val + 'abc';
+					if(newVal != val)
+						this.$refs.control.value = newVal;
+
+					//emit，input事件，对应了<number-input v-bind:value='age' v-on:input='age = arguments[0]'></number-input>中的input
+					this.$emit('input',newVal);
+				}
+			}
+		});
+
+		var obj = {
+			el: '#app',		
+			data:{
+				something:'',
+				age:''
+			}	
+		}
+
+		var app = new Vue(obj);
+
+
+	</script>
+
+</html>

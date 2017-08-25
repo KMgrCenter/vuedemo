@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+		<h4>简单的页面编辑器</h4>
+
+		<div id="app">
+			<h4>页数区</h4>
+			<ol>
+				<li v-for='(page,index) in pages' style='cursor: pointer;' @click='selectPage(page)'>
+					第{{index+1}}页
+				</li>
+			</ol>
+
+			<h4>编辑区</h4>
+			<!--显示各个控件的地方-->
+			<div class='pageContainer'>				
+				<div v-for='item in currentPage.content'>
+					<text-ctrl v-if='item.type=="text"' v-bind:data='item' v-on:click.native='selectContent(item)'></text-ctrl>
+					<img-ctrl v-if='item.type=="img"' v-bind:data='item' v-on:click.native='selectContent(item)'></img-ctrl>
+				</div>
+			</div>
+
+			<hr />
+			<h4>面板</h4>
+			<property-box v-bind:data='currentContent'></property-box>			
+
+			<hr />
+			<button v-on:click='load'>加载数据</button>
+			<button v-on:click='save'>保存</button>
+			<div>{{dataStr}}</div>
+		</div>
+
+		
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+
+	<script type="text/javascript">
+		
+		Vue.component('text-property-box',{
+			template:'\
+				<div>\
+					字体大小：<input type="text" v-model="data.fontSize" />\
+					背景色：<input type="text" v-model="data.backgroundColor" />\
+				</div>\
+			',
+			props:['data']
+		})
+
+		Vue.component('image-property-box',{
+			template:'\
+				<div>\
+					图片：<input type="text" v-model="data.img" />\
+					图片宽度：<input type="text" v-model="data.width" />\
+				</div>\
+			',
+			props:['data']
+		})
+
+		Vue.component('property-box',{
+			template:"\
+				<div>\
+					<text-property-box :data='data' v-if='data.type==\"text\"'></text-property-box>\
+					<image-property-box :data='data' v-else-if='data.type==\"img\"'></image-property-box>\
+					<div v-else></div>\
+				</div>\
+				",
+			props:['data'],			
+		})
+
+		Vue.component('text-ctrl',{			
+			template:'<div :style="styleObj">{{textVal}}</div>',
+			props:['data'], 
+			computed:{
+				styleObj: function(){ /*注意不能把这些计算放到data函数中*/
+					return {
+						"fontSize":this.data.fontSize+'px',
+						"backgroundColor":this.data.backgroundColor
+					};
+				},
+				textVal:function(){
+					return this.data.val;
+				}
+			}
+		})
+
+		Vue.component('img-ctrl',{
+			template:'<div>{{data.img}}</div>',
+			props:['data']
+		})
+
+		var obj = {
+			el: '#app',	
+			methods:{
+				selectPage:function(page){
+					this.currentPage = '';
+					this.currentPage = page;
+				},
+				selectContent:function(content){
+					this.currentContent = content;
+				},
+				save:function(){
+					this.dataStr = JSON.stringify(this.pages);
+				},
+				load:function(){
+					
+					var dataStr = '[{"no":1,"content":[{"type":"text","fontSize":"244","val":"你好","backgroundColor":"red"},{"type":"img","img":"user.png1","width":400}]},{"no":2,"content":[{"type":"text","fontSize":"24","val":"你好2","backgroundColor":"red"},{"type":"img","img":"user.png2","width":400}]},{"no":1,"content":[{"type":"text","fontSize":"42","val":"你好3","backgroundColor":"red"},{"type":"img","img":"user.png3","width":403}]}]';
+
+					this.pages = eval(dataStr);
+					this.currentPage = this.pages[0];
+				}
+			},
+			data:{
+				pages:[],
+				currentPage:'',
+				currentContent:'',
+				dataStr:'',
+			}	
+		}
+
+		var app = new Vue(obj);
+
+		//上来先加载第一页的数据
+		app.load();
+
+	</script>
+
+</html>

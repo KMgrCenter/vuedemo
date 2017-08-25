@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+		<div id="app">
+			<h4>监听原生事件</h4>
+			<p>在组件的根元素的事件上加.native的标签</p>
+
+			
+			<my-div v-on:click.native='divClick'></my-div>
+		</div>
+
+</body>
+
+	<script src="http://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+
+	<script type="text/javascript">
+		
+		Vue.component('my-div',{
+			template:"\
+				<div>\
+				<h4>头</h4>\
+				<p>内容</p>\
+				</div>\
+			",			
+		});
+
+
+		var obj = {
+			el: '#app',		
+			methods:{
+				divClick:function(){
+					alert('abc');
+				}
+			}		
+		}
+
+		var app = new Vue(obj);
+
+
+	</script>
+
+</html>
